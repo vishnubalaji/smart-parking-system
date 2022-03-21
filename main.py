@@ -18,7 +18,7 @@ app = FastAPI()
 
 @app.post("/sensors/update")
 def sensor_status(sensors: UltrasonicSensors):
-    print(f'---{sensors}---')
+    print(f'---{sensors}---\n---API is working fine---')
     return sensors
 
 @app.get("/sensors/retrieve")
