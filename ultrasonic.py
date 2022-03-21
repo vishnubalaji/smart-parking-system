@@ -1,7 +1,17 @@
 import RPi.GPIO as GPIO
 import requests
 import time
+from datetime import datetime as dt
 
+URL = 'https://smart-parking-system-fastapi.herokuapp.com/sensors/update'
+{
+	"date" : "03/15/22",
+	"local_time":"22:14:32",
+	"sensors" : {
+		"sensor_1":"available",
+		"sensor_2":"parked"
+	}
+}
 TRIG=23
 ECHO=24
 
@@ -18,7 +28,7 @@ while True:
     # To set TRIG pin as high
     GPIO.output(TRIG,True)
     time.sleep(0.00001)
-    
+
     GPIO.output(TRIG,False)
 
     while GPIO.input(ECHO)==0:
@@ -28,9 +38,20 @@ while True:
         pulse_end=time.time()
     
     pulse_duration=pulse_end-pulse_start
-    distance=pulse_duration*17150
-    distance=round(distance,2)
+    distance=pulse_duration*17200       # Speed = 344 m/s or 34400 cm/s. Since the distance is covered twice, half the time taken
+    # distance=round(distance,2)
     
-    if(distance):
-        pass
+    if(distance < 5):        
+        date = dt.now().strftime("%x")
+        local_time = dt.now().strftime("%X")
+        sensors = {
+            "sensor_1":"parked"
+        }
+
+        body = {
+            "date" : date,
+            "local_time" : local_time,
+            "sensors":sensors
+        }
+        requests.post(URL, json=body)
     time.sleep(2)
