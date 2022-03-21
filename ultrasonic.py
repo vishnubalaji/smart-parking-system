@@ -4,14 +4,7 @@ import time
 from datetime import datetime as dt
 
 URL = 'https://smart-parking-system-fastapi.herokuapp.com/sensors/update'
-{
-	"date" : "03/15/22",
-	"local_time":"22:14:32",
-	"sensors" : {
-		"sensor_1":"available",
-		"sensor_2":"parked"
-	}
-}
+
 TRIG=23
 ECHO=24
 
@@ -41,7 +34,7 @@ while True:
     distance=pulse_duration*17200       # Speed = 344 m/s or 34400 cm/s. Since the distance is covered twice, half the time taken
     # distance=round(distance,2)
     
-    if(distance < 5):        
+    if(distance <= 5):        
         date = dt.now().strftime("%x")
         local_time = dt.now().strftime("%X")
         sensors = {
