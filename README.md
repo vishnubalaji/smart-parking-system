@@ -1,15 +1,27 @@
 # smart-parking-system
 
-Clone the repo
-Create a virtual environment using python venv
-python -m venv <name of the env>
-Download all the packages using requirements.txt using
+<ol>
+<li>Clone the repository</li>
+<li>Create a virtual environment using the following command
+    
+    python -m venv <name of the env>
+    
+</li>
+<li>Download all the packages using requirements.txt
+    
     pip install -r requirements.txt
+    
+</li>
+</ol>
 
-Tech stack
-Heroku
-Streamlit
-FastAPI
-Pydantic
-uvicorn
-Insomnia
+Hurray!🎊 You are now good to start meddling with the code 👩‍💻😉
+
+## Tech stack
+<ul>
+<li>FastAPI</li>
+<li>Pydantic</li>
+<li>Uvicorn</li>
+<li>Insomnia</li>
+<li>Heroku</li>
+<li>Streamlit</li>
+</ul>
