@@ -1,4 +1,6 @@
 from datetime import datetime as dt
+from genericpath import exists
+from heapq import merge
 import string
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
@@ -26,19 +28,23 @@ db = firestore.client()
 @app.post("/sensors/update")
 def sensor_status(sensors: UltrasonicSensors):
     json_data = jsonable_encoder(sensors)
-    doc_ref = db.collection(u'smart-parking-sensors').document(u'sensors-status')
-    doc_ref.set({
+    sensor_time = json_data['local_time']
+    doc_ref = db.collection(u'smart-parking-sensors').document(u'sensors-'+sensor_time)
+    data = {
         u'date': json_data['date'],
+        u'server-received-date':firestore.SERVER_TIMESTAMP,
         u'local_time': json_data['local_time'],
         u'sensors': {
             u'sensor_1' : json_data['sensors']['sensor_1'],
             u'sensor_2': json_data['sensors']['sensor_2']
         }
-    })
+    }
+    # doc_ref.set(data,merge=True)
+    doc_ref.set(data)
     return "Updation is successful"
-    # print(f'---{sensors}---\n---API is working fine---')
-    # return sensors
 
-@app.get("/sensors/retrieve")
-def sensor_status_frontend():
-    return "Database is under construction. Apologies for the inconvenience."
+@app.get("/sensors/retrieve/{sensor_time}")
+def sensor_status_frontend(sensor_time:str):
+    doc_ref = db.collection(u'smart-parking-sensors').document(sensor_time)
+    doc = doc_ref.get()
+    return doc.to_dict() if doc.exists else 'Document doesn\'t exist :('
