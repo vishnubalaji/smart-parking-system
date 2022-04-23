@@ -19,9 +19,9 @@ Hurray!🎊 You are now good to start meddling with the code 👩‍💻😉
 ## Tech stack
 <ul>
 <li>FastAPI</li>
-<li>Pydantic</li>
+<li>Firebase</li>
 <li>Uvicorn</li>
 <li>Insomnia</li>
 <li>Heroku</li>
-<li>Streamlit</li>
+<li>Pydantic</li>
 </ul>
