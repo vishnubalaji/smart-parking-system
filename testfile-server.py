@@ -8,8 +8,7 @@ from pydantic import BaseModel
 import json
 
 import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
+from firebase_admin import credentials, firestore
 
 class sensors(BaseModel):
     sensor_1:str
