@@ -78,11 +78,14 @@ if __name__ == "__main__":
     GPIO.setup(ECHO_2,GPIO.IN)
 
     while True:
-        sensor1 = th.Thread(target=sensor_1())
-        sensor2 = th.Thread(target=sensor_2())
+        # sensor1 = th.Thread(target=sensor_1())
+        # sensor2 = th.Thread(target=sensor_2())
         
-        sensor1.start()
-        sensor2.start()
+        # sensor1.start()
+        # sensor2.start()
+
+        sensor_1()
+        sensor_2()
 
         sensors = {
             "sensor_1":sensor1_stat,
