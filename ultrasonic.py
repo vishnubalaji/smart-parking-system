@@ -4,7 +4,6 @@ To be run on Raspberry Pi 3
 import RPi.GPIO as GPIO
 import requests
 import time
-import threading as th
 # from datetime import datetime as dt
 
 sensors = None
@@ -31,9 +30,9 @@ def sensor_1():
     if(distance <= 5):
         # date = dt.now().strftime("%x")
         # local_time = dt.now().strftime("%X")
-        sensor1_stat = "parked"
+        return "parked"
     else:
-        sensor1_stat = "available"
+        return "available"
 
 def sensor_2():
     GPIO.output(TRIG_2,False)
@@ -55,9 +54,9 @@ def sensor_2():
     if(distance <= 5):
         # date = dt.now().strftime("%x")
         # local_time = dt.now().strftime("%X")
-        sensor2_stat = "parked"
+        return "parked"
     else:
-        sensor2_stat = "available"
+        return "available"
 
 if __name__ == "__main__":
     URL = 'https://smart-parking-system-fastapi.herokuapp.com/sensors/update'
@@ -76,7 +75,7 @@ if __name__ == "__main__":
 
     GPIO.setup(TRIG_2,GPIO.OUT)
     GPIO.setup(ECHO_2,GPIO.IN)
-
+    print("Listening...")
     while True:
         # sensor1 = th.Thread(target=sensor_1())
         # sensor2 = th.Thread(target=sensor_2())
@@ -84,12 +83,12 @@ if __name__ == "__main__":
         # sensor1.start()
         # sensor2.start()
 
-        sensor_1()
-        sensor_2()
+        stat1 = sensor_1()
+        stat2 = sensor_2()
 
         sensors = {
-            "sensor_1":sensor1_stat,
-            "sensor_2":sensor2_stat
+            "sensor_1":stat1,
+            "sensor_2":stat2
         }
         body = {
             # "date" : date,
