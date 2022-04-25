@@ -15,8 +15,8 @@ class sensors(BaseModel):
     sensor_2:str
 
 class UltrasonicSensors(BaseModel):
-    date : str
-    local_time : str    # In IST
+    # date : str
+    # local_time : str    # In IST
     sensors : sensors
 
 app = FastAPI()
@@ -25,14 +25,14 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 @app.post("/sensors/update")
-def sensor_status(sensors: UltrasonicSensors):
+def sensor_status_firebase(sensors: UltrasonicSensors):
     json_data = jsonable_encoder(sensors)
-    sensor_time = json_data['local_time']
-    doc_ref = db.collection(u'smart-parking-sensors').document(u'sensors-'+sensor_time)
+    # sensor_time = json_data['local_time']
+    doc_ref = db.collection(u'smart-parking-sensors').document(u'ultrasonic-sensors')
     data = {
-        u'date': json_data['date'],
+        # u'date': json_data['date'],
         u'server-received-date':firestore.SERVER_TIMESTAMP,
-        u'local_time': json_data['local_time'],
+        # u'local_time': json_data['local_time'],
         u'sensors': {
             u'sensor_1' : json_data['sensors']['sensor_1'],
             u'sensor_2': json_data['sensors']['sensor_2']
@@ -42,8 +42,30 @@ def sensor_status(sensors: UltrasonicSensors):
     doc_ref.set(data)
     return "Updation is successful"
 
-@app.get("/sensors/retrieve/{sensor_time}")
-def sensor_status_frontend(sensor_time:str):
-    doc_ref = db.collection(u'smart-parking-sensors').document(sensor_time)
+@app.get("/sensors/retrieve")
+def sensor_status_terminal():
+    doc_ref = db.collection(u'smart-parking-sensors').document(u'ultrasonic-sensors')
     doc = doc_ref.get()
     return doc.to_dict() if doc.exists else 'Document doesn\'t exist :('
+
+# Outdated format
+"""
+{
+	"date" : "03/15/22",
+	"local_time":"22:14:32",
+	"sensors" : {
+		"sensor_1":"available",
+		"sensor_2":"available"
+	}
+}
+"""
+
+# Updated format
+"""
+{
+	"sensors" : {
+		"sensor_1":"available",
+		"sensor_2":"available"
+	}
+}
+"""

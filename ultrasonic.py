@@ -35,15 +35,15 @@ while True:
     # distance=round(distance,2)
     
     if(distance <= 5):        
-        date = dt.now().strftime("%x")
-        local_time = dt.now().strftime("%X")
+        # date = dt.now().strftime("%x")
+        # local_time = dt.now().strftime("%X")
         sensors = {
             "sensor_1":"parked"
         }
 
         body = {
-            "date" : date,
-            "local_time" : local_time,
+            # "date" : date,
+            # "local_time" : local_time,
             "sensors":sensors
         }
         requests.post(URL, json=body)
