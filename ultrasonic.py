@@ -1,16 +1,25 @@
+"""
+To be run on Raspberry Pi 3
+"""
 import RPi.GPIO as GPIO
 import requests
 import time
-from datetime import datetime as dt
+# from datetime import datetime as dt
 
 URL = 'https://smart-parking-system-fastapi.herokuapp.com/sensors/update'
 
-TRIG=23
-ECHO=24
+TRIG_1 = 18
+ECHO_1 = 24
+
+TRIG_2 = 24
+ECHO_2 = 25
 
 GPIO.setmode(GPIO.BCM) # To follow broadcom chip-specific pin numbers
 
-# Declaring pin mode, if it is an input or an output pin
+# Declaration of pin modes
+GPIO.setup(TRIG,GPIO.OUT)
+GPIO.setup(ECHO,GPIO.IN)
+
 GPIO.setup(TRIG,GPIO.OUT)
 GPIO.setup(ECHO,GPIO.IN)
 
