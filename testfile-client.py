@@ -7,7 +7,8 @@ import requests
 
 # Create a callback on_snapshot function to capture changes
 def on_snapshot(doc_snapshot, changes, read_time):
-    response = requests.get("http://127.0.0.1:8000/sensors/retrieve").json()
+    # response = requests.get("http://127.0.0.1:8000/sensors/retrieve").json()
+    response = requests.get("https://smart-parking-system-fastapi.herokuapp.com/sensors/retrieve").json()
     print(f"Sensor-1 : {response['sensors']['sensor_1']}\tSensor-2 : {response['sensors']['sensor_2']}", end='\r')
     # for doc in doc_snapshot:
     #     print(f'Received document snapshot: {doc.id}', end = '\r')
